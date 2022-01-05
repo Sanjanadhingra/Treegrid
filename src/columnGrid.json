@@ -1,0 +1,76 @@
+{
+    "columnData": [
+        {
+            "name": "taskName",
+            "fontSize": 12,
+            "fontColor": "Red",
+            "width": 40,
+            "backGroundColor": "white",
+            "allignment": "left",
+            "textWrap": "break-word"
+        },
+        {
+            "name": "startDate",
+            "fontSize": 14,
+            "fontColor": "White",
+            "width": "23",
+            "backGroundColor": "red",
+            "allignment": "left",
+            "textWrap": "break-word"
+        },
+        {
+            "name": "endDate",
+            "fontSize": 19,
+            "fontColor": "yellow",
+            "width": 88,
+            "backGroundColor": "orange",
+            "allignment": "left",
+            "textWrap": "break-word"
+        },
+        {
+            "name": "progress",
+            "fontSize": 12,
+            "fontColor": "yelow",
+            "width": 20,
+            "backGroundColor": "green",
+            "allignment": "left",
+            "textWrap": "break-word"
+        },
+        {
+            "name": "duration",
+            "fontSize": 23,
+            "fontColor": "orange",
+            "width": 99,
+            "backGroundColor": "white",
+            "allignment": "left",
+            "textWrap": "break-word"
+        },
+        {
+            "name": "priority",
+            "fontSize": 13,
+            "fontColor": "black",
+            "width": 12,
+            "backGroundColor": "red",
+            "allignment": "left",
+            "textWrap": "break-word"
+        },
+        {
+            "name": "approved",
+            "fontSize": 14,
+            "fontColor": "pink",
+            "width": 17,
+            "backGroundColor": "red",
+            "allignment": "left",
+            "textWrap": "break-word"
+        },
+        {
+            "name": "isInExpandState",
+            "fontSize": 24,
+            "fontColor": "indigo",
+            "width": 12,
+            "backGroundColor": "red",
+            "allignment": "left",
+            "textWrap": "break-word"
+        }
+    ]
+}

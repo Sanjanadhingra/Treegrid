@@ -1,0 +1,60 @@
+{
+    "tasks": [
+        {
+            "taskID": 0,
+            "taskName": "Planning",
+            "startDate": "2017-02-02T18:30:00.000Z",
+            "endDate": "2017-02-06T18:30:00.000Z",
+            "progress": 100,
+            "duration": 5,
+            "priority": "Normal",
+            "approved": false,
+            "isInExpandState": true,
+            "parentId": -1
+        },
+        {
+            "taskID": 1,
+            "taskName": "Plan timeline",
+            "startDate": "2017-02-02T18:30:00.000Z",
+            "endDate": "2017-02-06T18:30:00.000Z",
+            "duration": 5,
+            "progress": 100,
+            "priority": "Normal",
+            "approved": false,
+            "isParent": true,
+            "parentId": -1
+        },
+        {
+            "taskID": 2,
+            "taskName": "Plan budget",
+            "startDate": "2017-02-02T18:30:00.000Z",
+            "endDate": "2017-02-06T18:30:00.000Z",
+            "duration": 5,
+            "progress": 100,
+            "approved": true,
+            "parentId": -1
+        },
+        {
+            "taskID": 3,
+            "taskName": "Allocate resources",
+            "startDate": "2017-02-02T18:30:00.000Z",
+            "endDate": "2017-02-06T18:30:00.000Z",
+            "duration": 5,
+            "progress": 100,
+            "priority": "Critical",
+            "approved": false,
+            "parentId": 1
+        },
+        {
+            "taskID": 4,
+            "taskName": "Planning complete",
+            "startDate": "2017-02-06T18:30:00.000Z",
+            "endDate": "2017-02-06T18:30:00.000Z",
+            "duration": 0,
+            "progress": 0,
+            "priority": "Low",
+            "approved": false,
+            "parentId": 3
+        }
+    ]
+}

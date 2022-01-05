@@ -1,14 +1,53 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
-const port = 3000;
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-app.listen(port, () => {
-    return console.log(`Express is listening at http://localhost:${port}`);
-});
+exports.App = void 0;
+const express = require("express");
+class App {
+    /**
+     * @param port Port Application listens on
+     * @param middleware Array of middleware to be applied to app
+     * @param routes Array of express.Router objects for application routes
+     * @param apiPath Base path for this api that will be prepended to all routes
+     * @param staticPath path to folder for public files express will make available
+     */
+    constructor(port, middleware, routes, apiPath) {
+        this.port = port;
+        this.apiPath = apiPath;
+        //* Create a new express app
+        this.app = express();
+        //* Method calls `this.app.use()` for each middleware
+        this.middleware(middleware);
+        //* Method calls `this.app.use()` for each router, prepending `this.apiPath` to each router
+        this.routes(routes);
+        //* Method calls `this.app.use(express.static(path))` to enable public access to static files
+    }
+    /**
+     * @param mware Array of middlewares to be loaded into express app
+     */
+    middleware(mware) {
+        mware.forEach((m) => {
+            this.app.use(m);
+        });
+    }
+    addMiddleWare(middleWare) {
+        this.app.use(middleWare);
+    }
+    /**
+     * Attaches route objects to app, appending routes to `apiPath`
+     * @param routes Array of router objects to be attached to the app
+     */
+    routes(routes) {
+        routes.forEach((r) => {
+            this.app.use(`${this.apiPath}`, r);
+        });
+    }
+    /**
+     * Start the Express app
+     */
+    listen() {
+        this.app.listen(this.port, () => {
+            console.log("APP LISTENING ON PORT:", this.port);
+        });
+    }
+}
+exports.App = App;
