@@ -1,12 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseController = void 0;
-const columnGrid_json_1 = require("../columnGrid.json");
+const fs_1 = __importDefault(require("fs"));
 /**
  * Provides functions to be used with express routes. Serves common CRUD fuctionality.
  */
 class BaseController {
-    constructor() {
+    constructor(columndata, task) {
+        this.columnData = columndata;
+        this.tasks = task;
     }
     jsonRes(doc, res) {
         res.status(200).json(doc);
@@ -19,19 +24,40 @@ class BaseController {
      */
     findColumns(res, errMsg = 'Failed to find documents') {
         try {
-            console.log(columnGrid_json_1.columnData);
-            this.jsonRes(columnGrid_json_1.columnData, res);
+            this.jsonRes(this.columnData, res);
         }
         catch (error) {
             this.errRes(error, res, errMsg, 404);
         }
     }
     editColumn(req, res, errMsg = `Failed to find document `) {
-        let objIndex;
-        console.log(req.params.name);
-        objIndex = columnGrid_json_1.columnData.findIndex((obj => obj.name == req.params.name));
-        console.log(objIndex);
-        //columnData[objIndex] = req
+        try {
+            let objIndex;
+            objIndex = this.columnData.findIndex((obj => obj.name == req.params.name));
+            if (objIndex === -1) {
+                throw ("Couldn't find");
+            }
+            this.columnData[objIndex] = req.body;
+            console.log("coll", this.columnData);
+            var obj = {};
+            obj["columnData"] = this.columnData;
+            console.log(obj);
+            fs_1.default.writeFile('../columnGrid.json', obj, (error) => {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    console.log("data craeted successfullt");
+                }
+            });
+            for (let i = 0; i <= this.tasks.length; i++) {
+                delete Object.assign(this.tasks[i], { [req.body.name]: this.tasks[i][req.params.name] })[this.tasks[i][req.params.name]];
+                /// this.tasks[i][req.params.name] = this.tasks[i][]
+            }
+            this.jsonRes(this.tasks, res);
+        }
+        catch (error) {
+        }
     }
     /**
      * Returns single doucument of model specified by _id.
