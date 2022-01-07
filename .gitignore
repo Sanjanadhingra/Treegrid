@@ -1,4 +1,4 @@
 node_modules/
-
+dist/
 # Remove unnecassry files
 package-lock.json
