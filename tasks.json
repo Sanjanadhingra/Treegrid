@@ -1,5 +1,4 @@
 {
-    "tasks": {
         "0":  {
             "taskID": 0,
             "taskName": "Planning",
@@ -11,7 +10,7 @@
             "approved": false,
             "isInExpandState": true,
             "parentId": -1
-        },
+         },
         "1":  {
             "taskID": 1,
             "taskName": "Plan timeline",
@@ -24,14 +23,15 @@
             "isParent": true,
             "parentId": -1
         },
-        "2": { "taskID": 2,
+        "2": { 
+            "taskID": 2,
             "taskName": "Plan budget",
             "startDate": "2017-02-02T18:30:00.000Z",
             "endDate": "2017-02-06T18:30:00.000Z",
             "duration": 5,
             "progress": 100,
             "approved": true,
-            "parentId": -1}
+            "parentId": -1
         },
         "3": {
             "taskID": 3,
@@ -54,5 +54,4 @@
             "priority": "Low",
             "approved": false,
             "parentId":3
-        }
-}
+  }}

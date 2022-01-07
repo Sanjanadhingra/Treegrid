@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 import { BaseController } from "./base.controller";
-import {columnData} from "../columnGrid.json"
-import {tasks} from "../tasks.json"
+let columnData = require("../../columnGrid.json")
+let tasks = require("../../tasks.json")
 
 export class ExampleController extends BaseController{
     data: any = {};

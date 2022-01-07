@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 const express = require("express");
+const socket_service_1 = require("./services/socket.service");
 class App {
     /**
      * @param port Port Application listens on
@@ -45,9 +46,15 @@ class App {
      * Start the Express app
      */
     listen() {
-        this.app.listen(this.port, () => {
-            console.log("APP LISTENING ON PORT:", this.port);
+        this.socketServer();
+    }
+    socketServer() {
+        const server = require('http').createServer(this.app);
+        const io = require('socket.io')(server);
+        server.listen(this.port, () => {
+            console.log('server connected to', this.port);
         });
+        let obj = new socket_service_1.SocketService(io);
     }
 }
 exports.App = App;

@@ -1,0 +1,103 @@
+{
+    "2": {
+        "columnId": 2,
+        "name": "startDate",
+        "fontSize": 14,
+        "fontColor": "White",
+        "width": "23",
+        "backGroundColor": "red",
+        "allignment": "left",
+        "textWrap": "break-word",
+        "type": "text"
+    },
+    "3": {
+        "columnId": 3,
+        "name": "endDate",
+        "fontSize": 19,
+        "fontColor": "yellow",
+        "width": 88,
+        "backGroundColor": "orange",
+        "allignment": "left",
+        "textWrap": "break-word",
+        "type": "text"
+    },
+    "4": {
+        "columnId": 4,
+        "name": "progress",
+        "fontSize": 12,
+        "fontColor": "yelow",
+        "width": 20,
+        "backGroundColor": "green",
+        "allignment": "left",
+        "textWrap": "break-word",
+        "type": "text"
+    },
+    "5": {
+        "columnId": 5,
+        "name": "duration",
+        "fontSize": 23,
+        "fontColor": "orange",
+        "width": 99,
+        "backGroundColor": "white",
+        "allignment": "left",
+        "textWrap": "break-word",
+        "type": "text"
+    },
+    "6": {
+        "columnId": 6,
+        "name": "priority",
+        "fontSize": 13,
+        "fontColor": "black",
+        "width": 12,
+        "backGroundColor": "red",
+        "allignment": "left",
+        "textWrap": "break-word",
+        "type": "text"
+    },
+    "7": {
+        "columnId": 7,
+        "name": "approved",
+        "fontSize": 14,
+        "fontColor": "pink",
+        "width": 17,
+        "backGroundColor": "red",
+        "allignment": "left",
+        "textWrap": "break-word",
+        "type": "text"
+    },
+    "8": {
+        "columnId": 8,
+        "name": "isInExpandState",
+        "fontSize": 24,
+        "fontColor": "indigo",
+        "width": 12,
+        "backGroundColor": "red",
+        "allignment": "left",
+        "textWrap": "break-word",
+        "type": "text"
+    },
+    "9": {
+        "columnId": 9,
+        "name": "taskName",
+        "fontSize": 19,
+        "fontColor": "hhhhh",
+        "width": 220,
+        "backGroundColor": "hhhh",
+        "allignment": "right",
+        "textWrap": "break-word",
+        "type": "date",
+        "defaultvalue": 0
+    },
+    "10": {
+        "columnId": 10,
+        "name": "deleted",
+        "fontSize": 19,
+        "fontColor": "hhhhh",
+        "width": 220,
+        "backGroundColor": "hhhh",
+        "allignment": "right",
+        "textWrap": "break-word",
+        "type": "date",
+        "defaultvalue": 0
+    }
+}

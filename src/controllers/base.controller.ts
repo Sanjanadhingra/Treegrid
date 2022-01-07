@@ -1,18 +1,23 @@
-import { Request, Response } from 'express'
-import  fs  from 'fs';
+import e, { Request, Response } from 'express'
+import fs from 'fs';
+import path from 'path';
 /**
  * Provides functions to be used with express routes. Serves common CRUD fuctionality. 
  */
 export class BaseController {
     columnData;
     tasks;
+    lastIndexOfColumn:number;
+    lastIndexOfRow:number
 
     constructor(
-        columndata: Array<any>,
-        task: any,
-    ) {
+        columndata: any,
+        task: any) 
+    {
         this.columnData = columndata;
-        this.tasks = task
+        this.tasks = task;
+        this.lastIndexOfColumn =  Number(Object.keys(this.columnData)[Object.keys(this.columnData).length - 1]) 
+        this.lastIndexOfRow = Number(Object.keys(this.tasks)[Object.keys(this.tasks).length - 1])
     }
 
     jsonRes(doc: any, res: Response) {
@@ -26,45 +31,113 @@ export class BaseController {
     /**
      * Returns all documents of model
      */
-    findColumns(res: Response, errMsg = 'Failed to find documents') {
+    // findColumns(res: Response, errMsg = 'Failed to find documents') {
+    //     try {
+    //         this.jsonRes(Object.values(this.columnData), res)
+    //     }
+    //     catch (error) {
+    //         this.errRes(error, res, errMsg, 404)
+    //     }
+    // }
+
+    getColumns() {
+        return Object.values(this.columnData)
+    }
+    
+
+    editColumn(id:number,data:any) {
+        delete data.id;
+        this.columnData[id] = data;
+        fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData),(err)=>{
+            console.log(err)
+        })
+       return this.columnData[id]
+    }
+
+    addColumn(id:number,data:any)  {
+        this.lastIndexOfColumn = this.lastIndexOfColumn +1;
+        this.columnData[data] = { columnId: this.lastIndexOfColumn, ...data };
+        fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (error) => {
+            if (error) {
+                throw new Error("couldn't add new column");
+            }
+        })
+    }
+
+    deleteColumn(req: Request, res: Response, errMsg = `Failed to delete document `) {
         try {
+            delete this.columnData[req.params.id];
+            fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (error) => {
+                    if(error){
+                       throw new Error("couldn't update file");
+                    }
+                });
             this.jsonRes(this.columnData, res)
+        }
+        catch(error) {
+          this.errRes(error, res, errMsg, 404)  
+        }
+    }
+    
+    getRows(res: Response, errMsg = 'Failed to find documents') {
+        try {
+            console.log(this.tasks)
+            this.jsonRes(Object.values(this.tasks), res)
         }
         catch (error) {
             this.errRes(error, res, errMsg, 404)
         }
     }
+    
+    deleteRow(id: Array<any>) {
+        id.forEach(element => delete this.tasks[element]);
+        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+                if(error){
+                   throw new Error("couldn't update file");
+                }
+            });
+        return this.tasks
+    }
 
-    editColumn(req: Request, res: Response, errMsg = `Failed to find document `) {
-        try {
-            let objIndex: number;
-            objIndex = this.columnData.findIndex((obj => obj.name == req.params.name));
-            if (objIndex === -1) {
-                throw ("Couldn't find")
+    editRow(id:number,data:any){
+        delete data.id
+        this.tasks[id] = data;
+            fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+                if (error) {
+                    throw new Error("couldn't update file");
+                }
+                else {
+                    console.log("data created successfully")
+                }
+            });
+          return this.tasks[id]
+    }
+
+   
+    addRow(req:Request, res:Response,  errMsg = `Failed to add document `) {
+         try {
+            this.lastIndexOfRow = this.lastIndexOfRow +1;
+            let stringLastIndexOfRow:number = JSON.parse(JSON.stringify(this.lastIndexOfRow));
+            if(req.body.isParent === true){
+                let parentId:any = req.params.taskId
             }
-            this.columnData[objIndex] = req.body;
-            console.log("coll",this.columnData);
-            var obj:any = {};
-            obj["columnData"] = this.columnData;
-            console.log(obj);
-                fs.writeFile('../columnGrid.json', obj, (error) => {
-                    if(error){
-                        console.log(error);
-                    }
-                    else{
-                    console.log("data craeted successfully")
-                    }
-                });
-            // for(let i:number=0; i<=this.tasks.length; i++){
-            //     delete Object.assign(this.tasks[i], {[req.body.name]: this.tasks[i][req.params.name] }) [this.tasks[i][req.params.name]];
-            //    /// this.tasks[i][req.params.name] = this.tasks[i][]
+            // else {
+            //     parentId = -1
             // }
-            this.jsonRes(this.columnData, res)
+            let keyValues = Object.entries(this.tasks); 
+            keyValues.splice(req.body.index, 0, [stringLastIndexOfRow.toString(), {...req.body, parentId:req.params.taskID}]); 
+            this.tasks = Object.fromEntries(keyValues) 
+
+            fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify( this.tasks), (error) => {
+                if (error) {
+                    throw new Error("couldn't add new column");
+                }
+            })
+            this.jsonRes(this.tasks, res)
         }
         catch (error) {
-
+             this.errRes(error, res, errMsg, 404)
         }
-
     }
 
     /**

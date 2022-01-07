@@ -1,7 +1,9 @@
 
 
 import { Application } from "express";
+import {Server} from 'socket.io';
 import express = require("express");
+import { SocketService } from './services/socket.service'
 
 export class App {
     public app: Application;
@@ -19,6 +21,8 @@ export class App {
         routes: Array<express.Router>,
         private apiPath:string,
     ) {
+
+        
         //* Create a new express app
         this.app = express();
 
@@ -57,8 +61,16 @@ export class App {
      * Start the Express app
      */
     public listen() {
-        this.app.listen(this.port, () => {
-            console.log("APP LISTENING ON PORT:", this.port);
+        this.socketServer();
+    }
+
+    public socketServer() {
+        const server = require('http').createServer(this.app);
+        const io = require('socket.io')(server);
+        server.listen(this.port, () => {
+            console.log('server connected to', this.port);
         });
+
+        let obj = new SocketService(io)
     }
 }
