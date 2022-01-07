@@ -21,7 +21,7 @@ export class SocketService extends BaseController{
 
             socket.on("editColumn", (data:any)=>{
             const updatedColumn = this.editColumn(data.id, data)
-            socket.broadcast.emit("editColumn", {editColumn:true, ...updatedColumn})
+            this.io.emit("editColumn", {editColumn:true, ...updatedColumn})
             })
             
             socket.on("addColumn", (data:any) => {
