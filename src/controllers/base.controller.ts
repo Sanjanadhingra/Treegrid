@@ -43,6 +43,10 @@ export class BaseController {
     getColumns() {
         return Object.values(this.columnData)
     }
+
+    getRowsData() {
+        return Object.values(this.tasks)
+    }
     
 
     editColumn(id:number,data:any) {
@@ -54,28 +58,32 @@ export class BaseController {
        return this.columnData[id]
     }
 
-    addColumn(id:number,data:any)  {
-        this.lastIndexOfColumn = this.lastIndexOfColumn +1;
-        this.columnData[data] = { columnId: this.lastIndexOfColumn, ...data };
+    async addColumn(data:any)  {
+        console.log(data);
+        
+        // this.lastIndexOfColumn = this.lastIndexOfColumn +1;
+        this.columnData[data.column.field] = data;
         fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (error) => {
             if (error) {
                 throw new Error("couldn't add new column");
             }
         })
+        await this.addFieldInRows(data.column.field, data.column.defaultValue);
     }
 
-    deleteColumn(req: Request, res: Response, errMsg = `Failed to delete document `) {
+    deleteColumn(data:any) {
         try {
-            delete this.columnData[req.params.id];
+            delete this.columnData[data.field];
             fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (error) => {
                     if(error){
                        throw new Error("couldn't update file");
                     }
                 });
-            this.jsonRes(this.columnData, res)
+           
         }
         catch(error) {
-          this.errRes(error, res, errMsg, 404)  
+         console.log(error);
+           
         }
     }
     
@@ -87,6 +95,17 @@ export class BaseController {
         catch (error) {
             this.errRes(error, res, errMsg, 404)
         }
+    }
+
+    async addFieldInRows (field:any, value:any) {
+        Object.values(this.tasks).forEach((element:any) => {
+            element[field] = value;
+        });
+        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+            if(error){
+               throw new Error("Error in adding new field");
+            }
+        });
     }
     
     deleteRow(id: Array<any>) {

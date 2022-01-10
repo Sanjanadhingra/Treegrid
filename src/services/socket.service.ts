@@ -14,18 +14,29 @@ export class SocketService extends BaseController{
         this.io.on('connection', (socket:any)=> {
             socket.on('data', (data:any) => {
                 console.log(data);
-                //  const column = this.getColumns()
-                //  console.log(column)
-                socket.emit('getColumn', {name: 'socket'})
+                 const column = this.getColumns()
+                 const rows = this.getRowsData()
+                 console.log(rows)
+                socket.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
             })
 
             socket.on("editColumn", (data:any)=>{
-            const updatedColumn = this.editColumn(data.id, data)
-            this.io.emit("editColumn", {editColumn:true, ...updatedColumn})
+                const updatedColumn = this.editColumn(data.id, data)
+                this.io.emit("editColumn", {editColumn:true, ...updatedColumn})
             })
             
             socket.on("addColumn", (data:any) => {
+                this.addColumn(data);
+                const column = this.getColumns()
+                const rows =  this.getRowsData()
+                socket.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
+            })
 
+            socket.on("deleteColumn", (data:any) => {
+                this.deleteColumn(data)
+                const column = this.getColumns()
+                const rows =  this.getRowsData()
+                socket.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
             })
 
 
