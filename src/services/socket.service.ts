@@ -24,21 +24,21 @@ export class SocketService extends BaseController{
                 const updatedColumn = this.editColumn(data)
                 const column = this.getColumns()
                 const rows =  this.getRowsData()
-                this.io.emit('getData', {getColumn:true, columnData: column, rowData: rows})
+                this.io.emit('getData', {getData:true, columnData: column, rowData: rows})
             })
             
             socket.on("addColumn", (data:any) => {
                 this.addColumn(data);
                 const column = this.getColumns()
                 const rows =  this.getRowsData()
-                this.io.emit('getData', {getColumn:true, columnData: column, rowData: rows})
+                this.io.emit('getData', {getData:true, columnData: column, rowData: rows})
             })
 
             socket.on("deleteColumn", (data:any) => {
                 this.deleteColumn(data)
                 const column = this.getColumns()
                 const rows =  this.getRowsData()
-                this.io.emit('getData', {getColumn:true, columnData: column, rowData: rows})
+                this.io.emit('getData', {getData:true, columnData: column, rowData: rows})
             })
 
 
