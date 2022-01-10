@@ -29,14 +29,14 @@ export class SocketService extends BaseController{
                 this.addColumn(data);
                 const column = this.getColumns()
                 const rows =  this.getRowsData()
-                socket.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
+                this.io.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
             })
 
             socket.on("deleteColumn", (data:any) => {
                 this.deleteColumn(data)
                 const column = this.getColumns()
                 const rows =  this.getRowsData()
-                socket.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
+                this.io.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
             })
 
 
