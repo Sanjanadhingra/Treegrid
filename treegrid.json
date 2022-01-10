@@ -1,421 +1,412 @@
 {
     "treeGrid": [
         {
-            "taskID": 1,
-            "taskName": "Planning",
-            "startDate": "2017-02-02T18:30:00.000Z",
-            "endDate": "2017-02-06T18:30:00.000Z",
-            "progress": 100,
-            "duration": 5,
-            "priority": "Normal",
-            "approved": false,
-            "isInExpandState": true,
-            "subtasks": [
-                {
-                    "taskID": 2,
-                    "taskName": "Plan timeline",
-                    "startDate": "2017-02-02T18:30:00.000Z",
-                    "endDate": "2017-02-06T18:30:00.000Z",
-                    "duration": 5,
-                    "progress": 100,
-                    "priority": "Normal",
-                    "approved": false
-                },
-                {
-                    "taskID": 3,
-                    "taskName": "Plan budget",
-                    "startDate": "2017-02-02T18:30:00.000Z",
-                    "endDate": "2017-02-06T18:30:00.000Z",
-                    "duration": 5,
-                    "progress": 100,
-                    "approved": true
-                },
-                {
-                    "taskID": 4,
-                    "taskName": "Allocate resources",
-                    "startDate": "2017-02-02T18:30:00.000Z",
-                    "endDate": "2017-02-06T18:30:00.000Z",
-                    "duration": 5,
-                    "progress": 100,
-                    "priority": "Critical",
-                    "approved": false
-                },
-                {
-                    "taskID": 5,
-                    "taskName": "Planning complete",
-                    "startDate": "2017-02-06T18:30:00.000Z",
-                    "endDate": "2017-02-06T18:30:00.000Z",
-                    "duration": 0,
-                    "progress": 0,
-                    "priority": "Low",
-                    "approved": true
-                }
-            ]
+          "rowID": 0,
+          "parentID": 49,
+          "rowName": "Helen",
+          "email": "helenperry@exodoc.com"
         },
         {
-            "taskID": 6,
-            "taskName": "Design",
-            "startDate": "2017-02-09T18:30:00.000Z",
-            "endDate": "2017-02-13T18:30:00.000Z",
-            "duration": 3,
-            "progress": 86,
-            "priority": "High",
-            "isInExpandState": false,
-            "approved": false,
-            "subtasks": [
-                {
-                    "taskID": 7,
-                    "taskName": "Software Specification",
-                    "startDate": "2017-02-09T18:30:00.000Z",
-                    "endDate": "2017-02-11T18:30:00.000Z",
-                    "duration": 3,
-                    "progress": 60,
-                    "priority": "Normal",
-                    "approved": false,
-                    "subtasks": [
-                        {
-                            "taskID": 41,
-                            "taskName": "pecification",
-                            "startDate": "2017-02-09T18:30:00.000Z",
-                            "endDate": "2017-02-11T18:30:00.000Z",
-                            "duration": 3,
-                            "progress": 60,
-                            "priority": "Normal",
-                            "approved": false
-                        },
-                        {
-                            "taskID": 42,
-                            "taskName": "Develo",
-                            "startDate": "2017-02-09T18:30:00.000Z",
-                            "endDate": "2017-02-11T18:30:00.000Z",
-                            "duration": 3,
-                            "progress": 100,
-                            "priority": "Critical",
-                            "approved": false
-                        },
-                        {
-                            "taskID": 43,
-                            "taskName": "Get  customer",
-                            "startDate": "2017-02-12T18:30:00.000Z",
-                            "endDate": "2017-02-13T18:30:00.000Z",
-                            "duration": 2,
-                            "progress": 100,
-                            "approved": true
-                        },
-                        {
-                            "taskID": 44,
-                            "taskName": "Design Dtation",
-                            "startDate": "2017-02-12T18:30:00.000Z",
-                            "endDate": "2017-02-13T18:30:00.000Z",
-                            "duration": 2,
-                            "progress": 100,
-                            "approved": true
-                        },
-                        {
-                            "taskID": 45,
-                            "taskName": "Desigete",
-                            "startDate": "2017-02-13T18:30:00.000Z",
-                            "endDate": "2017-02-13T18:30:00.000Z",
-                            "duration": 0,
-                            "progress": 0,
-                            "priority": "Normal",
-                            "approved": true
-                        }
-                    ]
-                },
-                {
-                    "taskID": 8,
-                    "taskName": "Develop prototype",
-                    "startDate": "2017-02-09T18:30:00.000Z",
-                    "endDate": "2017-02-11T18:30:00.000Z",
-                    "duration": 3,
-                    "progress": 100,
-                    "priority": "Critical",
-                    "approved": false
-                },
-                {
-                    "taskID": 9,
-                    "taskName": "Get approval from customer",
-                    "startDate": "2017-02-12T18:30:00.000Z",
-                    "endDate": "2017-02-13T18:30:00.000Z",
-                    "duration": 2,
-                    "progress": 100,
-                    "approved": true
-                },
-                {
-                    "taskID": 10,
-                    "taskName": "Design Documentation",
-                    "startDate": "2017-02-12T18:30:00.000Z",
-                    "endDate": "2017-02-13T18:30:00.000Z",
-                    "duration": 2,
-                    "progress": 100,
-                    "approved": true
-                },
-                {
-                    "taskID": 11,
-                    "taskName": "Design complete",
-                    "startDate": "2017-02-13T18:30:00.000Z",
-                    "endDate": "2017-02-13T18:30:00.000Z",
-                    "duration": 0,
-                    "progress": 0,
-                    "priority": "Normal",
-                    "approved": true
-                }
-            ]
+          "rowID": 1,
+          "parentID": 31,
+          "rowName": "Deanna",
+          "email": "deannaperry@exodoc.com"
         },
         {
-            "taskID": 12,
-            "taskName": "Implementation Phase",
-            "startDate": "2017-02-16T18:30:00.000Z",
-            "endDate": "2017-02-26T18:30:00.000Z",
-            "priority": "Normal",
-            "approved": false,
-            "duration": 11,
-            "subtasks": [
-                {
-                    "taskID": 13,
-                    "taskName": "Phase 1",
-                    "startDate": "2017-02-16T18:30:00.000Z",
-                    "endDate": "2017-02-26T18:30:00.000Z",
-                    "priority": "High",
-                    "approved": false,
-                    "duration": 11,
-                    "subtasks": [
-                        {
-                            "taskID": 14,
-                            "taskName": "Implementation Module 1",
-                            "startDate": "2017-02-16T18:30:00.000Z",
-                            "endDate": "2017-02-26T18:30:00.000Z",
-                            "priority": "Normal",
-                            "duration": 11,
-                            "approved": false,
-                            "subtasks": [
-                                {
-                                    "taskID": 15,
-                                    "taskName": "Development Task 1",
-                                    "startDate": "2017-02-16T18:30:00.000Z",
-                                    "endDate": "2017-02-18T18:30:00.000Z",
-                                    "duration": 3,
-                                    "progress": "50",
-                                    "priority": "High",
-                                    "approved": false
-                                },
-                                {
-                                    "taskID": 16,
-                                    "taskName": "Development Task 2",
-                                    "startDate": "2017-02-16T18:30:00.000Z",
-                                    "endDate": "2017-02-18T18:30:00.000Z",
-                                    "duration": 3,
-                                    "progress": "50",
-                                    "priority": "Low",
-                                    "approved": true
-                                },
-                                {
-                                    "taskID": 17,
-                                    "taskName": "Testing",
-                                    "startDate": "2017-02-19T18:30:00.000Z",
-                                    "endDate": "2017-02-20T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "Normal",
-                                    "approved": true
-                                },
-                                {
-                                    "taskID": 18,
-                                    "taskName": "Bug fix",
-                                    "startDate": "2017-02-23T18:30:00.000Z",
-                                    "endDate": "2017-02-24T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "Critical",
-                                    "approved": false
-                                },
-                                {
-                                    "taskID": 19,
-                                    "taskName": "Customer review meeting",
-                                    "startDate": "2017-02-25T18:30:00.000Z",
-                                    "endDate": "2017-02-26T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "High",
-                                    "approved": false
-                                },
-                                {
-                                    "taskID": 20,
-                                    "taskName": "Phase 1 complete",
-                                    "startDate": "2017-02-26T18:30:00.000Z",
-                                    "endDate": "2017-02-26T18:30:00.000Z",
-                                    "duration": 0,
-                                    "priority": "Low",
-                                    "approved": true
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "taskID": 21,
-                    "taskName": "Phase 2",
-                    "startDate": "2017-02-16T18:30:00.000Z",
-                    "endDate": "2017-02-27T18:30:00.000Z",
-                    "priority": "High",
-                    "approved": false,
-                    "duration": 12,
-                    "subtasks": [
-                        {
-                            "taskID": 22,
-                            "taskName": "Implementation Module 2",
-                            "startDate": "2017-02-16T18:30:00.000Z",
-                            "endDate": "2017-02-27T18:30:00.000Z",
-                            "priority": "Critical",
-                            "approved": false,
-                            "duration": 12,
-                            "subtasks": [
-                                {
-                                    "taskID": 23,
-                                    "taskName": "Development Task 1",
-                                    "startDate": "2017-02-16T18:30:00.000Z",
-                                    "endDate": "2017-02-19T18:30:00.000Z",
-                                    "duration": 4,
-                                    "progress": "50",
-                                    "priority": "Normal",
-                                    "approved": true
-                                },
-                                {
-                                    "taskID": 24,
-                                    "taskName": "Development Task 2",
-                                    "startDate": "2017-02-16T18:30:00.000Z",
-                                    "endDate": "2017-02-19T18:30:00.000Z",
-                                    "duration": 4,
-                                    "progress": "50",
-                                    "priority": "Critical",
-                                    "approved": true
-                                },
-                                {
-                                    "taskID": 25,
-                                    "taskName": "Testing",
-                                    "startDate": "2017-02-20T18:30:00.000Z",
-                                    "endDate": "2017-02-23T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "High",
-                                    "approved": false
-                                },
-                                {
-                                    "taskID": 26,
-                                    "taskName": "Bug fix",
-                                    "startDate": "2017-02-24T18:30:00.000Z",
-                                    "endDate": "2017-02-25T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "Low",
-                                    "approved": false
-                                },
-                                {
-                                    "taskID": 27,
-                                    "taskName": "Customer review meeting",
-                                    "startDate": "2017-02-26T18:30:00.000Z",
-                                    "endDate": "2017-02-27T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "Critical",
-                                    "approved": true
-                                },
-                                {
-                                    "taskID": 28,
-                                    "taskName": "Phase 2 complete",
-                                    "startDate": "2017-02-27T18:30:00.000Z",
-                                    "endDate": "2017-02-27T18:30:00.000Z",
-                                    "duration": 0,
-                                    "priority": "Normal",
-                                    "approved": false
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "taskID": 29,
-                    "taskName": "Phase 3",
-                    "startDate": "2017-02-16T18:30:00.000Z",
-                    "endDate": "2017-02-26T18:30:00.000Z",
-                    "priority": "Normal",
-                    "approved": false,
-                    "duration": 11,
-                    "subtasks": [
-                        {
-                            "taskID": 30,
-                            "taskName": "Implementation Module 3",
-                            "startDate": "2017-02-16T18:30:00.000Z",
-                            "endDate": "2017-02-26T18:30:00.000Z",
-                            "priority": "High",
-                            "approved": false,
-                            "duration": 11,
-                            "subtasks": [
-                                {
-                                    "taskID": 31,
-                                    "taskName": "Development Task 1",
-                                    "startDate": "2017-02-16T18:30:00.000Z",
-                                    "endDate": "2017-02-18T18:30:00.000Z",
-                                    "duration": 3,
-                                    "progress": "50",
-                                    "priority": "Low",
-                                    "approved": true
-                                },
-                                {
-                                    "taskID": 32,
-                                    "taskName": "Development Task 2",
-                                    "startDate": "2017-02-16T18:30:00.000Z",
-                                    "endDate": "2017-02-18T18:30:00.000Z",
-                                    "duration": 3,
-                                    "progress": "50",
-                                    "priority": "Normal",
-                                    "approved": false
-                                },
-                                {
-                                    "taskID": 33,
-                                    "taskName": "Testing",
-                                    "startDate": "2017-02-19T18:30:00.000Z",
-                                    "endDate": "2017-02-20T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "Critical",
-                                    "approved": true
-                                },
-                                {
-                                    "taskID": 34,
-                                    "taskName": "Bug fix",
-                                    "startDate": "2017-02-23T18:30:00.000Z",
-                                    "endDate": "2017-02-24T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "High",
-                                    "approved": false
-                                },
-                                {
-                                    "taskID": 35,
-                                    "taskName": "Customer review meeting",
-                                    "startDate": "2017-02-25T18:30:00.000Z",
-                                    "endDate": "2017-02-26T18:30:00.000Z",
-                                    "duration": 2,
-                                    "progress": "0",
-                                    "priority": "Normal",
-                                    "approved": true
-                                },
-                                {
-                                    "taskID": 36,
-                                    "taskName": "Phase 3 complete",
-                                    "startDate": "2017-02-26T18:30:00.000Z",
-                                    "endDate": "2017-02-26T18:30:00.000Z",
-                                    "duration": 0,
-                                    "priority": "Critical",
-                                    "approved": false
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+          "rowID": 2,
+          "parentID": 33,
+          "rowName": "Mitzi",
+          "email": "mitziperry@exodoc.com"
+        },
+        {
+          "rowID": 3,
+          "parentID": 47,
+          "rowName": "Meyer",
+          "email": "meyerperry@exodoc.com"
+        },
+        {
+          "rowID": 4,
+          "parentID": 46,
+          "rowName": "Nelda",
+          "email": "neldaperry@exodoc.com"
+        },
+        {
+          "rowID": 5,
+          "parentID": 15,
+          "rowName": "Ruth",
+          "email": "ruthperry@exodoc.com"
+        },
+        {
+          "rowID": 6,
+          "parentID": 36,
+          "rowName": "Swanson",
+          "email": "swansonperry@exodoc.com"
+        },
+        {
+          "rowID": 7,
+          "parentID": 45,
+          "rowName": "Mullen",
+          "email": "mullenperry@exodoc.com"
+        },
+        {
+          "rowID": 8,
+          "parentID": 39,
+          "rowName": "Candice",
+          "email": "candiceperry@exodoc.com"
+        },
+        {
+          "rowID": 9,
+          "parentID": 28,
+          "rowName": "Washington",
+          "email": "washingtonperry@exodoc.com"
+        },
+        {
+          "rowID": 10,
+          "parentID": 23,
+          "rowName": "Whitfield",
+          "email": "whitfieldperry@exodoc.com"
+        },
+        {
+          "rowID": 11,
+          "parentID": 78,
+          "rowName": "Myra",
+          "email": "myraperry@exodoc.com"
+        },
+        {
+          "rowID": 12,
+          "parentID": 34,
+          "rowName": "Jeannie",
+          "email": "jeannieperry@exodoc.com"
+        },
+        {
+          "rowID": 13,
+          "parentID": 33,
+          "rowName": "Casandra",
+          "email": "casandraperry@exodoc.com"
+        },
+        {
+          "rowID": 14,
+          "parentID": 11,
+          "rowName": "Brennan",
+          "email": "brennanperry@exodoc.com"
+        },
+        {
+          "rowID": 15,
+          "parentID": 17,
+          "rowName": "Herring",
+          "email": "herringperry@exodoc.com"
+        },
+        {
+          "rowID": 16,
+          "parentID": 46,
+          "rowName": "Maldonado",
+          "email": "maldonadoperry@exodoc.com"
+        },
+        {
+          "rowID": 17,
+          "parentID": 11,
+          "rowName": "Reva",
+          "email": "revaperry@exodoc.com"
+        },
+        {
+          "rowID": 18,
+          "parentID": 12,
+          "rowName": "Walter",
+          "email": "walterperry@exodoc.com"
+        },
+        {
+          "rowID": 19,
+          "parentID": 44,
+          "rowName": "Adrian",
+          "email": "adrianperry@exodoc.com"
+        },
+        {
+          "rowID": 20,
+          "parentID": 42,
+          "rowName": "Tammy",
+          "email": "tammyperry@exodoc.com"
+        },
+        {
+          "rowID": 21,
+          "parentID": 46,
+          "rowName": "Nettie",
+          "email": "nettieperry@exodoc.com"
+        },
+        {
+          "rowID": 22,
+          "parentID": 46,
+          "rowName": "Simone",
+          "email": "simoneperry@exodoc.com"
+        },
+        {
+          "rowID": 23,
+          "parentID": 37,
+          "rowName": "Gay",
+          "email": "gayperry@exodoc.com"
+        },
+        {
+          "rowID": 24,
+          "parentID": 21,
+          "rowName": "Ofelia",
+          "email": "ofeliaperry@exodoc.com"
+        },
+        {
+          "rowID": 25,
+          "parentID": 44,
+          "rowName": "Marks",
+          "email": "marksperry@exodoc.com"
+        },
+        {
+          "rowID": 26,
+          "parentID": 35,
+          "rowName": "Weeks",
+          "email": "weeksperry@exodoc.com"
+        },
+        {
+          "rowID": 27,
+          "parentID": 21,
+          "rowName": "Jeanine",
+          "email": "jeanineperry@exodoc.com"
+        },
+        {
+          "rowID": 28,
+          "parentID": 31,
+          "rowName": "Ericka",
+          "email": "erickaperry@exodoc.com"
+        },
+        {
+          "rowID": 29,
+          "parentID": 28,
+          "rowName": "Vaughan",
+          "email": "vaughanperry@exodoc.com"
+        },
+        {
+          "rowID": 30,
+          "parentID": 13,
+          "rowName": "Burch",
+          "email": "burchperry@exodoc.com"
+        },
+        {
+          "rowID": 31,
+          "parentID": 36,
+          "rowName": "Wilson",
+          "email": "wilsonperry@exodoc.com"
+        },
+        {
+          "rowID": 32,
+          "parentID": 29,
+          "rowName": "Snyder",
+          "email": "snyderperry@exodoc.com"
+        },
+        {
+          "rowID": 33,
+          "parentID": 48,
+          "rowName": "English",
+          "email": "englishperry@exodoc.com"
+        },
+        {
+          "rowID": 34,
+          "parentID": 92,
+          "rowName": "Duncan",
+          "email": "duncanperry@exodoc.com"
+        },
+        {
+          "rowID": 35,
+          "parentID": 20,
+          "rowName": "Mandy",
+          "email": "mandyperry@exodoc.com"
+        },
+        {
+          "rowID": 36,
+          "parentID": 39,
+          "rowName": "Tia",
+          "email": "tiaperry@exodoc.com"
+        },
+        {
+          "rowID": 37,
+          "parentID": 29,
+          "rowName": "Melba",
+          "email": "melbaperry@exodoc.com"
+        },
+        {
+          "rowID": 38,
+          "parentID": 22,
+          "rowName": "Beulah",
+          "email": "beulahperry@exodoc.com"
+        },
+        {
+          "rowID": 39,
+          "parentID": 43,
+          "rowName": "Chaney",
+          "email": "chaneyperry@exodoc.com"
+        },
+        {
+          "rowID": 40,
+          "parentID": 40,
+          "rowName": "Francisca",
+          "email": "franciscaperry@exodoc.com"
+        },
+        {
+          "rowID": 41,
+          "parentID": 23,
+          "rowName": "Margo",
+          "email": "margoperry@exodoc.com"
+        },
+        {
+          "rowID": 42,
+          "parentID": 20,
+          "rowName": "Fowler",
+          "email": "fowlerperry@exodoc.com"
+        },
+        {
+          "rowID": 43,
+          "parentID": 28,
+          "rowName": "Tommie",
+          "email": "tommieperry@exodoc.com"
+        },
+        {
+          "rowID": 44,
+          "parentID": 32,
+          "rowName": "Reyna",
+          "email": "reynaperry@exodoc.com"
+        },
+        {
+          "rowID": 45,
+          "parentID": 31,
+          "rowName": "Maxine",
+          "email": "maxineperry@exodoc.com"
+        },
+        {
+          "rowID": 46,
+          "parentID": 21,
+          "rowName": "Ellen",
+          "email": "ellenperry@exodoc.com"
+        },
+        {
+          "rowID": 47,
+          "parentID": 80,
+          "rowName": "Burt",
+          "email": "burtperry@exodoc.com"
+        },
+        {
+          "rowID": 48,
+          "parentID": 23,
+          "rowName": "Bass",
+          "email": "bassperry@exodoc.com"
+        },
+        {
+          "rowID": 49,
+          "parentID": 15,
+          "rowName": "Berger",
+          "email": "bergerperry@exodoc.com"
+        },
+        {
+          "rowID": 50,
+          "parentID": 23,
+          "rowName": "Mcbride",
+          "email": "mcbrideperry@exodoc.com"
+        },
+        {
+          "rowID": 51,
+          "parentID": 34,
+          "rowName": "Cindy",
+          "email": "cindyperry@exodoc.com"
+        },
+        {
+          "rowID": 52,
+          "parentID": 31,
+          "rowName": "Julie",
+          "email": "julieperry@exodoc.com"
+        },
+        {
+          "rowID": 53,
+          "parentID": 32,
+          "rowName": "Lorena",
+          "email": "lorenaperry@exodoc.com"
+        },
+        {
+          "rowID": 54,
+          "parentID": 59,
+          "rowName": "Colon",
+          "email": "colonperry@exodoc.com"
+        },
+        {
+          "rowID": 55,
+          "parentID": 15,
+          "rowName": "Barron",
+          "email": "barronperry@exodoc.com"
+        },
+        {
+          "rowID": 56,
+          "parentID": 44,
+          "rowName": "Vaughn",
+          "email": "vaughnperry@exodoc.com"
+        },
+        {
+          "rowID": 57,
+          "parentID": 35,
+          "rowName": "Castillo",
+          "email": "castilloperry@exodoc.com"
+        },
+        {
+          "rowID": 58,
+          "parentID": 26,
+          "rowName": "Collier",
+          "email": "collierperry@exodoc.com"
+        },
+        {
+          "rowID": 59,
+          "parentID": 39,
+          "rowName": "Earline",
+          "email": "earlineperry@exodoc.com"
+        },
+        {
+          "rowID": 60,
+          "parentID": 24,
+          "rowName": "Summers",
+          "email": "summersperry@exodoc.com"
+        },
+        {
+          "rowID": 61,
+          "parentID": 54,
+          "rowName": "Jaclyn",
+          "email": "jaclynperry@exodoc.com"
+        },
+        {
+          "rowID": 62,
+          "parentID": 27,
+          "rowName": "Fulton",
+          "email": "fultonperry@exodoc.com"
+        },
+        {
+          "rowID": 63,
+          "parentID": 18,
+          "rowName": "Michael",
+          "email": "michaelperry@exodoc.com"
+        },
+        {
+          "rowID": 64,
+          "parentID": 44,
+          "rowName": "Osborne",
+          "email": "osborneperry@exodoc.com"
+        },
+        {
+          "rowID": 65,
+          "parentID": 37,
+          "rowName": "Strickland",
+          "email": "stricklandperry@exodoc.com"
+        },
+        {
+          "rowID": 66,
+          "parentID": 40,
+          "rowName": "Cortez",
+          "email": "cortezperry@exodoc.com"
+        },
+        {
+          "rowID": 67,
+          "parentID": 65,
+          "rowName": "Kathie",
+          "email": "kathieperry@exodoc.com"
+        }   
+      ]
 }
