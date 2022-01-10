@@ -17,12 +17,14 @@ export class SocketService extends BaseController{
                  const column = this.getColumns()
                  const rows = this.getRowsData()
                  console.log(rows)
-                socket.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
+                socket.emit('getData', {getData:true, columnData: column, rowData: rows})
             })
 
             socket.on("editColumn", (data:any)=>{
-                const updatedColumn = this.editColumn(data.id, data)
-                this.io.emit("editColumn", {editColumn:true, ...updatedColumn})
+                const updatedColumn = this.editColumn(data)
+                const column = this.getColumns()
+                const rows =  this.getRowsData()
+                this.io.emit('getColumn', {getColumn:true, columnData: column, rowData: rows})
             })
             
             socket.on("addColumn", (data:any) => {

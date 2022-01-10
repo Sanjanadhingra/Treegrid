@@ -49,13 +49,11 @@ export class BaseController {
     }
     
 
-    editColumn(id:number,data:any) {
-        delete data.id;
-        this.columnData[id] = data;
+    editColumn(data:any) {
+        this.columnData[data.column.field] = data;
         fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData),(err)=>{
             console.log(err)
         })
-       return this.columnData[id]
     }
 
     async addColumn(data:any)  {
