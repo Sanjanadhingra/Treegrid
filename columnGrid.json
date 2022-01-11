@@ -1,1 +1,34 @@
-{"email":{"column":{"field":"email","headerText":"Email12356","isPrimaryKey":false,"width":180,"textAlign":"Left","type":"string"},"style":{"color":"#000000","backgroundColor":"#ffffff","fontSize":"","textWrap":""}},"rowName":{"column":{"field":"rowName","headerText":"Name","isPrimaryKey":false,"width":180,"textAlign":"Left","type":"string"},"style":{"color":"#000000","backgroundColor":"#ffffff","fontSize":"","textWrap":""}}}
+{
+    "email": {
+        "column": {
+            "field": "email",
+            "headerText": "Email12356",
+            "isPrimaryKey": false,
+            "width": 180,
+            "textAlign": "Left",
+            "type": "string"
+        },
+        "style": {
+            "color": "#000000",
+            "backgroundColor": "#ffffff",
+            "fontSize": "",
+            "textWrap": ""
+        }
+    },
+    "rowName": {
+        "column": {
+            "field": "rowName",
+            "headerText": "Name",
+            "isPrimaryKey": false,
+            "width": 180,
+            "textAlign": "Left",
+            "type": "string"
+        },
+        "style": {
+            "color": "#000000",
+            "backgroundColor": "#ffffff",
+            "fontSize": "",
+            "textWrap": ""
+        }
+    }
+}

@@ -17,31 +17,33 @@ class SocketService extends base_controller_1.BaseController {
                 const column = this.getColumns();
                 const rows = this.getRowsData();
                 console.log(rows);
-                socket.emit('getColumn', { getColumn: true, columnData: column, rowData: rows });
+                socket.emit('getData', { getData: true, columnData: column, rowData: rows });
             });
             socket.on("editColumn", (data) => {
-                const updatedColumn = this.editColumn(data.id, data);
-                this.io.emit("editColumn", Object.assign({ editColumn: true }, updatedColumn));
+                const updatedColumn = this.editColumn(data);
+                const column = this.getColumns();
+                const rows = this.getRowsData();
+                this.io.emit('getData', { getData: true, columnData: column, rowData: rows });
             });
             socket.on("addColumn", (data) => {
                 this.addColumn(data);
                 const column = this.getColumns();
                 const rows = this.getRowsData();
-                socket.emit('getColumn', { getColumn: true, columnData: column, rowData: rows });
+                this.io.emit('getData', { getData: true, columnData: column, rowData: rows });
             });
             socket.on("deleteColumn", (data) => {
                 this.deleteColumn(data);
                 const column = this.getColumns();
                 const rows = this.getRowsData();
-                socket.emit('getColumn', { getColumn: true, columnData: column, rowData: rows });
+                this.io.emit('getData', { getData: true, columnData: column, rowData: rows });
             });
             socket.on("deleteRow", (data) => {
                 const deletedRow = this.deleteRow(data);
-                socket.broadcast.emit("deleteRow", Object.assign({ deleteRow: true }, deletedRow));
+                this.io.emit("deleteRow", Object.assign({ deleteRow: true }, deletedRow));
             });
             socket.on("editRow", (data) => {
                 const editedRow = this.editRow(data.id, data);
-                socket.broadcast.emit("editRow", Object.assign({ editRow: true }, editedRow));
+                this.io.emit("editRow", Object.assign({ editRow: true }, editedRow));
             });
             socket.on("addRow", (data) => {
             });

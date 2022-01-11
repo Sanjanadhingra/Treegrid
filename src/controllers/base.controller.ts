@@ -28,18 +28,6 @@ export class BaseController {
         res.status(status).json({ error: message });
     }
 
-    /**
-     * Returns all documents of model
-     */
-    // findColumns(res: Response, errMsg = 'Failed to find documents') {
-    //     try {
-    //         this.jsonRes(Object.values(this.columnData), res)
-    //     }
-    //     catch (error) {
-    //         this.errRes(error, res, errMsg, 404)
-    //     }
-    // }
-
     getColumns() {
         return Object.values(this.columnData)
     }
@@ -49,16 +37,19 @@ export class BaseController {
     }
     
 
-    editColumn(data:any) {
+    async editColumn(data:any) {
+        if(this.columnData[data.column.field].column.type === data.column.type){
+          
+        }
         this.columnData[data.column.field] = data;
         fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData),(err)=>{
             console.log(err)
         })
+        await this.editFieldInRows(data.column.field, data.column.type, data.column.defaultValue);
     }
 
     async addColumn(data:any)  {
         console.log(data);
-        
         // this.lastIndexOfColumn = this.lastIndexOfColumn +1;
         this.columnData[data.column.field] = data;
         fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (error) => {
@@ -69,20 +60,14 @@ export class BaseController {
         await this.addFieldInRows(data.column.field, data.column.defaultValue);
     }
 
-    deleteColumn(data:any) {
-        try {
-            delete this.columnData[data.field];
+    async deleteColumn(data:any) {
+        delete this.columnData[data.field];
             fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (error) => {
                     if(error){
                        throw new Error("couldn't update file");
                     }
-                });
-           
-        }
-        catch(error) {
-         console.log(error);
-           
-        }
+            });
+        await this.deleteFieldInRows(data.field);
     }
     
     getRows(res: Response, errMsg = 'Failed to find documents') {
@@ -106,6 +91,40 @@ export class BaseController {
         });
     }
     
+    async deleteFieldInRows (field:any){
+        Object.values(this.tasks).forEach((element:any) => {
+             delete element[field]
+        });
+        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+            if(error){
+               throw new Error("Error in adding new field");
+            }
+        });
+    }
+
+    async editFieldInRows (field:any,type:any,value:any) {
+        Object.values(this.tasks).forEach((element:any) => {
+            if(type === "string"){
+                element[field] === String(element[field]);
+            }
+            if(type === "date"){
+                element[field] === new Date(element[field]);
+            }
+
+            if(type === "number"){
+               Number(element[field])? element[field] === value: element[field] === Number(element[field])
+            }
+            if(type === "boolean"){
+               element[field] === Boolean(element[field]);
+            }
+        });
+        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+            if(error){
+               throw new Error("Error in adding new field");
+            }
+        });
+    }
+
     deleteRow(id: Array<any>) {
         id.forEach(element => delete this.tasks[element]);
         fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
@@ -163,6 +182,7 @@ export class BaseController {
     findById(res: Response, documentId: string, errMsg = `Failed to find document ${documentId}`) {
 
     }
+
     /**
      * Returns single document from given model that matches the query.
      */

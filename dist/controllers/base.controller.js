@@ -31,30 +31,20 @@ class BaseController {
     errRes(err, res, message = 'Sever Error', status = 500) {
         res.status(status).json({ error: message });
     }
-    /**
-     * Returns all documents of model
-     */
-    // findColumns(res: Response, errMsg = 'Failed to find documents') {
-    //     try {
-    //         this.jsonRes(Object.values(this.columnData), res)
-    //     }
-    //     catch (error) {
-    //         this.errRes(error, res, errMsg, 404)
-    //     }
-    // }
     getColumns() {
         return Object.values(this.columnData);
     }
     getRowsData() {
         return Object.values(this.tasks);
     }
-    editColumn(id, data) {
-        delete data.id;
-        this.columnData[id] = data;
-        fs_1.default.writeFile(path_1.default.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (err) => {
-            console.log(err);
+    editColumn(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.columnData[data.column.field] = data;
+            fs_1.default.writeFile(path_1.default.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (err) => {
+                console.log(err);
+            });
+            yield this.editFieldInRows(data.column.field, data.column.type, data.column.defaultValue);
         });
-        return this.columnData[id];
     }
     addColumn(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -70,17 +60,15 @@ class BaseController {
         });
     }
     deleteColumn(data) {
-        try {
+        return __awaiter(this, void 0, void 0, function* () {
             delete this.columnData[data.field];
             fs_1.default.writeFile(path_1.default.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (error) => {
                 if (error) {
                     throw new Error("couldn't update file");
                 }
             });
-        }
-        catch (error) {
-            console.log(error);
-        }
+            yield this.deleteFieldInRows(data.field);
+        });
     }
     getRows(res, errMsg = 'Failed to find documents') {
         try {
@@ -95,6 +83,40 @@ class BaseController {
         return __awaiter(this, void 0, void 0, function* () {
             Object.values(this.tasks).forEach((element) => {
                 element[field] = value;
+            });
+            fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+                if (error) {
+                    throw new Error("Error in adding new field");
+                }
+            });
+        });
+    }
+    deleteFieldInRows(field) {
+        return __awaiter(this, void 0, void 0, function* () {
+            Object.values(this.tasks).forEach((element) => {
+                delete element[field];
+            });
+            fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+                if (error) {
+                    throw new Error("Error in adding new field");
+                }
+            });
+        });
+    }
+    editFieldInRows(field, type, value) {
+        return __awaiter(this, void 0, void 0, function* () {
+            Object.values(this.tasks).forEach((element) => {
+                if (type === "string") {
+                    element[field] === String(element[field]);
+                }
+                // if(type === "date"){
+                // }
+                if (type === "number") {
+                    Number(element[field]) ? element[field] === value : element[field] === Number(element[field]);
+                }
+                if (type === "boolean") {
+                    element[field] === Boolean(element[field]);
+                }
             });
             fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
                 if (error) {
