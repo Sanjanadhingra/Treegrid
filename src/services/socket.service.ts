@@ -44,12 +44,12 @@ export class SocketService extends BaseController{
 
             socket.on("deleteRow", (data:any)=>{
                 const deletedRow = this.deleteRow(data)
-                socket.broadcast.emit("deleteRow", {deleteRow:true, ...deletedRow})
+                this.io.emit("deleteRow", {deleteRow:true, ...deletedRow})
             })
 
             socket.on("editRow", (data:any) => {
                const editedRow = this.editRow(data.id, data)
-               socket.broadcast.emit("editRow", {editRow:true, ...editedRow})
+               this.io.emit("editRow", {editRow:true, ...editedRow})
             })
 
             socket.on("addRow", (data:any) => {
