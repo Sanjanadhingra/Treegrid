@@ -52,8 +52,16 @@ export class SocketService extends BaseController{
                this.io.emit("editRow", {editRow:true, ...editedRow})
             })
 
-            socket.on("addRow", (data:any) => {
+            socket.on("addRecord", (data:any) => {
+                console.log(data);
+                // call controller to add record in json file
+                socket.broadcast.emit('addRecord', {...data, addRecord:true})
+            })
 
+            socket.on("updateRecord", (data:any) => {
+                console.log(data);
+                // call controler to update this record
+                socket.broadcast.emit('updateRecord', {...data, updateRecord:true})
             })
             console.log('socket connected successfully');
         })
