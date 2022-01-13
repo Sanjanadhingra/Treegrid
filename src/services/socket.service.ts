@@ -42,25 +42,23 @@ export class SocketService extends BaseController{
             })
 
 
-            socket.on("deleteRow", (data:any)=>{
-                const deletedRow = this.deleteRow(data)
-                this.io.emit("deleteRow", {deleteRow:true, ...deletedRow})
+            socket.on("deleteRecord", (data:any)=>{
+                console.log(data);
+                
+                socket.broadcast.emit("deleteRecord", {deleteRecord:true, data})
             })
 
-            socket.on("editRow", (data:any) => {
-               const editedRow = this.editRow(data.id, data)
-               this.io.emit("editRow", {editRow:true, ...editedRow})
-            })
-
+            /** Add new Record and publish changes*/
             socket.on("addRecord", (data:any) => {
                 console.log(data);
-                // call controller to add record in json file
+                this.addRecord(data?.recordToAdd, data?.index, data?.position)
                 socket.broadcast.emit('addRecord', {...data, addRecord:true})
             })
 
+            /** Update record and publish changes */
             socket.on("updateRecord", (data:any) => {
                 console.log(data);
-                // call controler to update this record
+                this.editRecord(data?.recordToUpdate, data?.index);
                 socket.broadcast.emit('updateRecord', {...data, updateRecord:true})
             })
             console.log('socket connected successfully');

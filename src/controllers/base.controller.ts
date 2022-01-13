@@ -45,7 +45,8 @@ export class BaseController {
         fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData),(err)=>{
             console.log(err)
         })
-        await this.editFieldInRows(data.column.field, data.column.type, data.column.defaultValue);
+        await this.editFieldInRows(data.column.field, data.column.type, data.column.defaultValue, Object.values(this.tasks));
+        this.writeTasksToFile();
     }
 
     async addColumn(data:any)  {
@@ -57,7 +58,8 @@ export class BaseController {
                 throw new Error("couldn't add new column");
             }
         })
-        await this.addFieldInRows(data.column.field, data.column.defaultValue);
+        await this.addFieldInRows(data.column.field, data.column.defaultValue, Object.values(this.tasks));
+        this.writeTasksToFile();
     }
 
     async deleteColumn(data:any) {
@@ -67,7 +69,8 @@ export class BaseController {
                        throw new Error("couldn't update file");
                     }
             });
-        await this.deleteFieldInRows(data.field);
+        await this.deleteFieldInRows(data.field, Object.values(this.tasks));
+        this.writeTasksToFile();
     }
     
     getRows(res: Response, errMsg = 'Failed to find documents') {
@@ -80,30 +83,28 @@ export class BaseController {
         }
     }
 
-    async addFieldInRows (field:any, value:any) {
-        Object.values(this.tasks).forEach((element:any) => {
-            element[field] = value;
-        });
-        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-            if(error){
-               throw new Error("Error in adding new field");
-            }
-        });
+    async addFieldInRows (field:any, value:any, tasks:any) {
+        if(Array.isArray(tasks)) {
+            tasks.forEach((element:any) => {
+                element[field] = value;
+                if(element?.subTasks && element?.subTasks.length) {
+                    this.addFieldInRows(field, value, element?.subTasks)
+                }
+            })
+        }
     }
     
-    async deleteFieldInRows (field:any){
-        Object.values(this.tasks).forEach((element:any) => {
-             delete element[field]
-        });
-        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-            if(error){
-               throw new Error("Error in adding new field");
+    async deleteFieldInRows (field:any, tasks:any){
+        tasks.forEach((element:any) => {
+             delete element[field];
+             if(element?.subTasks && element?.subTasks.length) {
+                this.deleteFieldInRows(field, element?.subTasks)
             }
         });
     }
 
-    async editFieldInRows (field:any,type:any,value:any) {
-        Object.values(this.tasks).forEach((element:any) => {
+    async editFieldInRows (field:any,type:any,value:any, tasks:any) {
+        tasks.forEach((element:any) => {
             if(type === "string"){
                 element[field] === String(element[field]);
             }
@@ -117,63 +118,73 @@ export class BaseController {
             if(type === "boolean"){
                element[field] === Boolean(element[field]);
             }
-        });
-        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-            if(error){
-               throw new Error("Error in adding new field");
+            if(element?.subTasks && element?.subTasks.length) {
+                this.editFieldInRows(field, type, value, element?.subTasks)
             }
         });
     }
 
-    deleteRow(id: Array<any>) {
+    async deleteRecord(index:number) {
+        // this.deleteRow(index, Object.values(this.tasks));
+        this.writeTasksToFile();
+    }
+
+    async deleteRow(id: Array<any>) {
         id.forEach(element => delete this.tasks[element]);
-        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-                if(error){
-                   throw new Error("couldn't update file");
-                }
-            });
+        this.writeTasksToFile();
         return this.tasks
     }
 
-    editRow(id:number,data:any){
-        delete data.id
-        this.tasks[id] = data;
-            fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-                if (error) {
-                    throw new Error("couldn't update file");
-                }
-                else {
-                    console.log("data created successfully")
-                }
-            });
-          return this.tasks[id]
+    /** Function to update record */
+    async editRecord(record:any, index:number){
+        await this.editRow(record, index, Object.values(this.tasks));
+        this.writeTasksToFile();
     }
 
-   
-    addRow(req:Request, res:Response,  errMsg = `Failed to add document `) {
-         try {
-            this.lastIndexOfRow = this.lastIndexOfRow +1;
-            let stringLastIndexOfRow:number = JSON.parse(JSON.stringify(this.lastIndexOfRow));
-            if(req.body.isParent === true){
-                let parentId:any = req.params.taskId
+    /** Recursive function to find and update record */
+    async editRow(record:any, index:number, tasks:any, currCount:number = 0){
+        for(let i=0; i<tasks.length; i++) {
+            if(currCount>index) break;
+            if(currCount == index) {
+                tasks[i] = {...tasks[i], ...record};    
             }
-            // else {
-            //     parentId = -1
-            // }
-            let keyValues = Object.entries(this.tasks); 
-            keyValues.splice(req.body.index, 0, [stringLastIndexOfRow.toString(), {...req.body, parentId:req.params.taskID}]); 
-            this.tasks = Object.fromEntries(keyValues) 
+            currCount += 1;
+            if(tasks[i]?.subTasks && tasks[i]?.subTasks.length) {
+                currCount = await this.editRow(record, index, tasks[i]?.subTasks, currCount)
+            }
+        }
+        return currCount  
+    }
 
-            fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify( this.tasks), (error) => {
-                if (error) {
-                    throw new Error("couldn't add new column");
-                }
-            })
-            this.jsonRes(this.tasks, res)
+    /** Function to add new Record */
+    async addRecord(record:any, index:number, position:string) {
+        await this.addRow(record, index, position, Object.values(this.tasks))
+        this.writeTasksToFile();
+    }
+
+   /** Recursive function to find the index position and insert new record to that position */
+    async addRow(record:any, index:number, position:string, tasks:any, currCount:number = 0) {
+        for(let i=0; i<tasks.length; i++) {
+            if(currCount>index) break;
+            if(currCount == index) {
+                if(position == 'Child') {
+                    if(tasks[i]['subTasks']){
+                        tasks[i].subTasks.push(record)
+                        
+                    } else {
+                        tasks[i]['subTasks'] = [record];
+                    }
+                } else {
+                    tasks.splice(i+1, 0, record);
+                    
+                }  
+            }
+            currCount += 1;
+            if(tasks[i]?.subTasks && tasks[i]?.subTasks.length) {
+                currCount = await this.addRow(record, index, position, tasks[i]?.subTasks, currCount)
+            }
         }
-        catch (error) {
-             this.errRes(error, res, errMsg, 404)
-        }
+        return currCount    
     }
 
     /**
@@ -204,5 +215,13 @@ export class BaseController {
      */
     deleteById(res: Response, documentId: string, errMsg = `Failed to delete document ${documentId}`) {
 
+    }
+
+    writeTasksToFile(){
+        fs.writeFile(path.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+            if(error){
+               throw new Error("Error in adding new field");
+            }
+        });
     }
 }
