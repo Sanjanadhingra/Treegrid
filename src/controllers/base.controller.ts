@@ -125,14 +125,22 @@ export class BaseController {
     }
 
     async deleteRecord(index:number) {
-        // this.deleteRow(index, Object.values(this.tasks));
+        await this.deleteRow(index, Object.values(this.tasks));
         this.writeTasksToFile();
     }
 
-    async deleteRow(id: Array<any>) {
-        id.forEach(element => delete this.tasks[element]);
-        this.writeTasksToFile();
-        return this.tasks
+    async deleteRow(index:number, tasks:any, currCount:number = 0){
+        for(let i=0; i<tasks.length; i++) {
+            if(currCount>index) break;
+            if(currCount == index) {
+                tasks.splice(i,1);    
+            }
+            currCount += 1;
+            if(tasks[i]?.subTasks && tasks[i]?.subTasks.length) {
+                currCount = await this.deleteRow(index, tasks[i]?.subTasks, currCount)
+            }
+        }
+        return currCount  
     }
 
     /** Function to update record */

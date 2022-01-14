@@ -44,8 +44,8 @@ export class SocketService extends BaseController{
 
             socket.on("deleteRecord", (data:any)=>{
                 console.log(data);
-                
-                socket.broadcast.emit("deleteRecord", {deleteRecord:true, data})
+                this.deleteRecord(data.index);
+                socket.broadcast.emit('deleteRecord', {data, deleteRecord:true })
             })
 
             /** Add new Record and publish changes*/
