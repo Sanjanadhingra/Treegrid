@@ -1,18 +1,43 @@
 {
-    "email": {
+    "rowID": {
         "column": {
-            "field": "email",
-            "headerText": "Email12356",
-            "isPrimaryKey": false,
+            "field": "rowID",
+            "headerText": "Row ID",
+            "isPrimaryKey": true,
+            "showInColumnChooser": false,
+            "validationRules":{"required":true, "number":true},
+            "visible": true,
+            "format": {
+                "format": "#"
+            },
             "width": 180,
             "textAlign": "Left",
-            "type": "string"
+            "type": "text"
         },
         "style": {
             "color": "#000000",
             "backgroundColor": "#ffffff",
-            "fontSize": "",
+            "fontSize": "12px",
             "textWrap": ""
+        }
+    },
+    "email": {
+        "column": {
+            "field": "email",
+            "headerText": "Email546",
+            "isPrimaryKey": false,
+            "width": 180,
+            "validationRules":{"required":true, "email":true},
+            "textAlign": "Left",
+            "type": "text",
+            "defaultValue": "default@default.com",
+            "editId": "grid-column274"
+        },
+        "style": {
+            "color": "#00ff40",
+            "backgroundColor": "#000000",
+            "fontSize": 32,
+            "textWrap": true
         }
     },
     "rowName": {
@@ -22,13 +47,70 @@
             "isPrimaryKey": false,
             "width": 180,
             "textAlign": "Left",
-            "type": "string"
+            "type": "text",
+            "defaultValue": "raja",
+            "editId": "grid-column197"
+        },
+        "style": {
+            "color": "#ff0000",
+            "backgroundColor": "#ffffff",
+            "fontSize": 12,
+            "textWrap": true
+        }
+    },
+    "newcol": {
+        "column": {
+            "field": "newcol",
+            "headerText": "new col 1",
+            "isPrimaryKey": false,
+            "width": 200,
+            "textAlign": "Right",
+            "type": "text",
+            "defaultValue": "2bdfghjbgj",
+            "editId": "grid-column70"
         },
         "style": {
             "color": "#000000",
             "backgroundColor": "#ffffff",
-            "fontSize": "",
-            "textWrap": ""
+            "fontSize": 12,
+            "textWrap": true
+        }
+    },
+    "activity": {
+        "column": {
+            "field": "activity",
+            "headerText": "activity",
+            "isPrimaryKey": false,
+            "width": 120,
+            "textAlign": "Center",
+            "type": "boolean",
+            "defaultValue": "true",
+            "editId": "grid-column211",
+            "editType": "booleanedit",
+            "displayAsCheckBox": true
+        },
+        "style": {
+            "color": "#000000",
+            "backgroundColor": "#ffffff",
+            "fontSize": 12,
+            "textWrap": true
+        }
+    },
+    "democol2": {
+        "column": {
+            "field": "democol2",
+            "headerText": "demo col2",
+            "isPrimaryKey": false,
+            "width": 120,
+            "textAlign": "Left",
+            "type": "text",
+            "defaultValue": "fghfs"
+        },
+        "style": {
+            "color": "#000000",
+            "backgroundColor": "#ffffff",
+            "fontSize": 12,
+            "textWrap": true
         }
     }
 }
