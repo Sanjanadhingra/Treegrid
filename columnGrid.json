@@ -1,33 +1,10 @@
 {
-    "rowID": {
-        "column": {
-            "field": "rowID",
-            "headerText": "Row ID",
-            "isPrimaryKey": true,
-            "showInColumnChooser": false,
-            "validationRules":{"required":true, "number":true},
-            "visible": true,
-            "format": {
-                "format": "#"
-            },
-            "width": 180,
-            "textAlign": "Left",
-            "type": "text"
-        },
-        "style": {
-            "color": "#000000",
-            "backgroundColor": "#ffffff",
-            "fontSize": "12px",
-            "textWrap": ""
-        }
-    },
     "email": {
         "column": {
             "field": "email",
             "headerText": "Email546",
             "isPrimaryKey": false,
             "width": 180,
-            "validationRules":{"required":true, "email":true},
             "textAlign": "Left",
             "type": "text",
             "defaultValue": "default@default.com",

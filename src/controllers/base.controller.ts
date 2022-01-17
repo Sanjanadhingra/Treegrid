@@ -17,7 +17,7 @@ export class BaseController {
         this.columnData = columndata;
         this.tasks = task;
         this.lastIndexOfColumn =  Number(Object.keys(this.columnData)[Object.keys(this.columnData).length - 1]) 
-        this.lastIndexOfRow = Number(Object.keys(this.tasks)[Object.keys(this.tasks).length - 1])
+        this.lastIndexOfRow = Number(this.tasks[this.tasks.length - 1])
     }
 
     jsonRes(doc: any, res: Response) {
@@ -33,7 +33,7 @@ export class BaseController {
     }
 
     getRowsData() {
-        return Object.values(this.tasks)
+        return this.tasks
     }
     
 
@@ -45,7 +45,7 @@ export class BaseController {
         fs.writeFile(path.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData),(err)=>{
             console.log(err)
         })
-        await this.editFieldInRows(data.column.field, data.column.type, data.column.defaultValue, Object.values(this.tasks));
+        await this.editFieldInRows(data.column.field, data.column.type, data.column.defaultValue, this.tasks);
         this.writeTasksToFile();
     }
 
@@ -58,7 +58,7 @@ export class BaseController {
                 throw new Error("couldn't add new column");
             }
         })
-        await this.addFieldInRows(data.column.field, data.column.defaultValue, Object.values(this.tasks));
+        await this.addFieldInRows(data.column.field, data.column.defaultValue, this.tasks);
         this.writeTasksToFile();
     }
 
@@ -69,14 +69,14 @@ export class BaseController {
                        throw new Error("couldn't update file");
                     }
             });
-        await this.deleteFieldInRows(data.field, Object.values(this.tasks));
+        await this.deleteFieldInRows(data.field, this.tasks);
         this.writeTasksToFile();
     }
     
     getRows(res: Response, errMsg = 'Failed to find documents') {
         try {
             console.log(this.tasks)
-            this.jsonRes(Object.values(this.tasks), res)
+            this.jsonRes(this.tasks, res)
         }
         catch (error) {
             this.errRes(error, res, errMsg, 404)
@@ -125,7 +125,7 @@ export class BaseController {
     }
 
     async deleteRecord(index:number) {
-        await this.deleteRow(index, Object.values(this.tasks));
+        await this.deleteRow(index, this.tasks);
         this.writeTasksToFile();
     }
 
@@ -145,7 +145,7 @@ export class BaseController {
 
     /** Function to update record */
     async editRecord(record:any, index:number){
-        await this.editRow(record, index, Object.values(this.tasks));
+        await this.editRow(record, index, this.tasks);
         this.writeTasksToFile();
     }
 
@@ -166,12 +166,14 @@ export class BaseController {
 
     /** Function to add new Record */
     async addRecord(record:any, index:number, position:string) {
-        await this.addRow(record, index, position, Object.values(this.tasks))
+        delete record.index;
+        await this.addRow(record, index, position, this.tasks)
         this.writeTasksToFile();
     }
 
    /** Recursive function to find the index position and insert new record to that position */
     async addRow(record:any, index:number, position:string, tasks:any, currCount:number = 0) {
+        
         for(let i=0; i<tasks.length; i++) {
             if(currCount>index) break;
             if(currCount == index) {

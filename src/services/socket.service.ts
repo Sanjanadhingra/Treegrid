@@ -13,10 +13,10 @@ export class SocketService extends BaseController{
     connect() {
         this.io.on('connection', (socket:any)=> {
             socket.on('data', (data:any) => {
-                console.log(data);
+                // console.log(data);
                  const column = this.getColumns()
                  const rows = this.getRowsData()
-                 console.log(rows)
+                //  console.log(rows)
                 socket.emit('getData', {getData:true, columnData: column, rowData: rows})
             })
 
@@ -43,7 +43,7 @@ export class SocketService extends BaseController{
 
 
             socket.on("deleteRecord", (data:any)=>{
-                console.log(data);
+                // console.log(data);
                 this.deleteRecord(data.index);
                 socket.broadcast.emit('deleteRecord', {data, deleteRecord:true })
             })
@@ -55,9 +55,14 @@ export class SocketService extends BaseController{
                 socket.broadcast.emit('addRecord', {...data, addRecord:true})
             })
 
+            socket.on("paste", (data:any) => {
+                console.log('event listened', data);
+                socket.broadcast.emit('addRecord', {...data, addRecord:true})
+            })
+
             /** Update record and publish changes */
             socket.on("updateRecord", (data:any) => {
-                console.log(data);
+                // console.log(data);
                 this.editRecord(data?.recordToUpdate, data?.index);
                 socket.broadcast.emit('updateRecord', {...data, updateRecord:true})
             })
