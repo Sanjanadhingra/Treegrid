@@ -15,15 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseController = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+let columnData = require("../../columnGrid.json");
+let tasks = require('../../tasks.json');
 /**
  * Provides functions to be used with express routes. Serves common CRUD fuctionality.
  */
 class BaseController {
-    constructor(columndata, task) {
-        this.columnData = columndata;
-        this.tasks = task;
+    constructor() {
+        this.columnData = columnData;
+        this.tasks = tasks;
         this.lastIndexOfColumn = Number(Object.keys(this.columnData)[Object.keys(this.columnData).length - 1]);
-        this.lastIndexOfRow = Number(Object.keys(this.tasks)[Object.keys(this.tasks).length - 1]);
+        this.lastIndexOfRow = Number(this.tasks[this.tasks.length - 1]);
     }
     jsonRes(doc, res) {
         res.status(200).json(doc);
@@ -35,15 +37,18 @@ class BaseController {
         return Object.values(this.columnData);
     }
     getRowsData() {
-        return Object.values(this.tasks);
+        return this.tasks;
     }
     editColumn(data) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (this.columnData[data.column.field].column.type === data.column.type) {
+            }
             this.columnData[data.column.field] = data;
             fs_1.default.writeFile(path_1.default.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.columnData), (err) => {
                 console.log(err);
             });
-            yield this.editFieldInRows(data.column.field, data.column.type, data.column.defaultValue);
+            yield this.editFieldInRows(data.column.field, data.column.type, data.column.defaultValue, this.tasks);
+            this.writeTasksToFile();
         });
     }
     addColumn(data) {
@@ -56,7 +61,8 @@ class BaseController {
                     throw new Error("couldn't add new column");
                 }
             });
-            yield this.addFieldInRows(data.column.field, data.column.defaultValue);
+            yield this.addFieldInRows(data.column.field, data.column.defaultValue, this.tasks);
+            this.writeTasksToFile();
         });
     }
     deleteColumn(data) {
@@ -67,109 +73,213 @@ class BaseController {
                     throw new Error("couldn't update file");
                 }
             });
-            yield this.deleteFieldInRows(data.field);
+            yield this.deleteFieldInRows(data.field, this.tasks);
+            this.writeTasksToFile();
         });
     }
     getRows(res, errMsg = 'Failed to find documents') {
         try {
             console.log(this.tasks);
-            this.jsonRes(Object.values(this.tasks), res);
+            this.jsonRes(this.tasks, res);
         }
         catch (error) {
             this.errRes(error, res, errMsg, 404);
         }
     }
-    addFieldInRows(field, value) {
+    addFieldInRows(field, value, tasks) {
         return __awaiter(this, void 0, void 0, function* () {
-            Object.values(this.tasks).forEach((element) => {
-                element[field] = value;
-            });
-            fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-                if (error) {
-                    throw new Error("Error in adding new field");
-                }
-            });
+            if (Array.isArray(tasks)) {
+                tasks.forEach((element) => {
+                    element[field] = value;
+                    if ((element === null || element === void 0 ? void 0 : element.subTasks) && (element === null || element === void 0 ? void 0 : element.subTasks.length)) {
+                        this.addFieldInRows(field, value, element === null || element === void 0 ? void 0 : element.subTasks);
+                    }
+                });
+            }
         });
     }
-    deleteFieldInRows(field) {
+    deleteFieldInRows(field, tasks) {
         return __awaiter(this, void 0, void 0, function* () {
-            Object.values(this.tasks).forEach((element) => {
+            tasks.forEach((element) => {
                 delete element[field];
-            });
-            fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-                if (error) {
-                    throw new Error("Error in adding new field");
+                if ((element === null || element === void 0 ? void 0 : element.subTasks) && (element === null || element === void 0 ? void 0 : element.subTasks.length)) {
+                    this.deleteFieldInRows(field, element === null || element === void 0 ? void 0 : element.subTasks);
                 }
             });
         });
     }
-    editFieldInRows(field, type, value) {
+    editFieldInRows(field, type, value, tasks) {
         return __awaiter(this, void 0, void 0, function* () {
-            Object.values(this.tasks).forEach((element) => {
+            tasks.forEach((element) => {
                 if (type === "string") {
                     element[field] === String(element[field]);
                 }
-                // if(type === "date"){
-                // }
+                if (type === "date") {
+                    element[field] === new Date(element[field]);
+                }
                 if (type === "number") {
                     Number(element[field]) ? element[field] === value : element[field] === Number(element[field]);
                 }
                 if (type === "boolean") {
                     element[field] === Boolean(element[field]);
                 }
-            });
-            fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-                if (error) {
-                    throw new Error("Error in adding new field");
+                if ((element === null || element === void 0 ? void 0 : element.subTasks) && (element === null || element === void 0 ? void 0 : element.subTasks.length)) {
+                    this.editFieldInRows(field, type, value, element === null || element === void 0 ? void 0 : element.subTasks);
                 }
             });
         });
     }
-    deleteRow(id) {
-        id.forEach(element => delete this.tasks[element]);
-        fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-            if (error) {
-                throw new Error("couldn't update file");
-            }
+    deleteRecord(index) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.deleteRow(index, this.tasks);
+            yield this.writeTasksToFile();
         });
-        return this.tasks;
     }
-    editRow(id, data) {
-        delete data.id;
-        this.tasks[id] = data;
-        fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
-            if (error) {
-                throw new Error("couldn't update file");
-            }
-            else {
-                console.log("data created successfully");
-            }
-        });
-        return this.tasks[id];
-    }
-    addRow(req, res, errMsg = `Failed to add document `) {
-        try {
-            this.lastIndexOfRow = this.lastIndexOfRow + 1;
-            let stringLastIndexOfRow = JSON.parse(JSON.stringify(this.lastIndexOfRow));
-            if (req.body.isParent === true) {
-                let parentId = req.params.taskId;
-            }
-            // else {
-            //     parentId = -1
-            // }
-            let keyValues = Object.entries(this.tasks);
-            keyValues.splice(req.body.index, 0, [stringLastIndexOfRow.toString(), Object.assign(Object.assign({}, req.body), { parentId: req.params.taskID })]);
-            this.tasks = Object.fromEntries(keyValues);
-            fs_1.default.writeFile(path_1.default.join(__dirname, '../../columnGrid.json'), JSON.stringify(this.tasks), (error) => {
-                if (error) {
-                    throw new Error("couldn't add new column");
+    deleteRow(index, tasks, currCount = 0) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < tasks.length; i++) {
+                if (currCount > index)
+                    break;
+                if (currCount == index) {
+                    tasks.splice(i, 1);
                 }
-            });
-            this.jsonRes(this.tasks, res);
-        }
-        catch (error) {
-            this.errRes(error, res, errMsg, 404);
-        }
+                currCount += 1;
+                if (((_a = tasks[i]) === null || _a === void 0 ? void 0 : _a.subTasks) && ((_b = tasks[i]) === null || _b === void 0 ? void 0 : _b.subTasks.length)) {
+                    currCount = yield this.deleteRow(index, (_c = tasks[i]) === null || _c === void 0 ? void 0 : _c.subTasks, currCount);
+                }
+            }
+            return currCount;
+        });
+    }
+    /** Function to update record */
+    editRecord(record, index) {
+        return __awaiter(this, void 0, void 0, function* () {
+            delete record.index;
+            record['createdAt'] = new Date();
+            yield this.editRow(record, index, this.tasks);
+            yield this.writeTasksToFile();
+        });
+    }
+    /** Recursive function to find and update record */
+    editRow(record, index, tasks, currCount = 0) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < tasks.length; i++) {
+                if (currCount > index)
+                    break;
+                if (currCount == index) {
+                    tasks[i] = Object.assign(Object.assign({}, tasks[i]), record);
+                }
+                currCount += 1;
+                if (((_a = tasks[i]) === null || _a === void 0 ? void 0 : _a.subTasks) && ((_b = tasks[i]) === null || _b === void 0 ? void 0 : _b.subTasks.length)) {
+                    currCount = yield this.editRow(record, index, (_c = tasks[i]) === null || _c === void 0 ? void 0 : _c.subTasks, currCount);
+                }
+            }
+            return currCount;
+        });
+    }
+    /** Function to add new Record */
+    addRecord(record, index, position) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.record = record;
+            delete record[0].index;
+            yield this.addTimeStamp(this.record);
+            yield this.addRow(this.record, index, position, this.tasks);
+            yield this.writeTasksToFile();
+        });
+    }
+    /** Recursive function to find the index position and insert new record to that position */
+    addRow(record, index, position, tasks, currCount = 0) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < tasks.length; i++) {
+                if (currCount > index)
+                    break;
+                if (currCount == index) {
+                    if (position == 'Child') {
+                        if (tasks[i]['subTasks']) {
+                            tasks[i].subTasks.push(...record);
+                        }
+                        else {
+                            tasks[i]['subTasks'] = [...record];
+                        }
+                    }
+                    else {
+                        tasks.splice(i + 1, 0, ...record);
+                    }
+                }
+                currCount += 1;
+                if (((_a = tasks[i]) === null || _a === void 0 ? void 0 : _a.subTasks) && ((_b = tasks[i]) === null || _b === void 0 ? void 0 : _b.subTasks.length)) {
+                    currCount = yield this.addRow(record, index, position, (_c = tasks[i]) === null || _c === void 0 ? void 0 : _c.subTasks, currCount);
+                }
+            }
+            return currCount;
+        });
+    }
+    cutPasteRecord(record, index, position, cutIndexes) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.cutPasteRow(record, index, position, this.tasks, cutIndexes);
+            // await this.removeNull(this.tasks)
+            yield this.writeTasksToFile();
+        });
+    }
+    cutPasteRow(record, index, position, tasks, cutIndexes, currCount = 0) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < tasks.length; i++) {
+                if (cutIndexes === null || cutIndexes === void 0 ? void 0 : cutIndexes.includes(currCount)) {
+                    tasks[i]['isDeleted'] = true;
+                }
+                if (currCount == index) {
+                    if (position == 'Child') {
+                        if (tasks[i]['subTasks']) {
+                            console.log('pushed to child');
+                            tasks[i].subTasks.push(...record);
+                        }
+                        else {
+                            console.log('pushed to child');
+                            tasks[i]['subTasks'] = [...record];
+                        }
+                    }
+                    else {
+                        console.log('pushed next');
+                        tasks.splice(i + 1, 0, ...record);
+                    }
+                }
+                currCount += 1;
+                if (((_a = tasks[i]) === null || _a === void 0 ? void 0 : _a.subTasks) && ((_b = tasks[i]) === null || _b === void 0 ? void 0 : _b.subTasks.length)) {
+                    currCount = yield this.cutPasteRow(record, index, position, (_c = tasks[i]) === null || _c === void 0 ? void 0 : _c.subTasks, cutIndexes, currCount);
+                }
+            }
+            return currCount;
+        });
+    }
+    removeNull(tasks) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < tasks.length; i++) {
+                if (tasks[i]['isDeleted'] && tasks[i]['isDeleted'] == true) {
+                    console.log('item deleted');
+                    tasks.splice(i, 1);
+                }
+                if (((_a = tasks[i]) === null || _a === void 0 ? void 0 : _a.subTasks) && ((_b = tasks[i]) === null || _b === void 0 ? void 0 : _b.subTasks.length)) {
+                    yield this.removeNull((_c = tasks[i]) === null || _c === void 0 ? void 0 : _c.subTasks);
+                }
+            }
+        });
+    }
+    addTimeStamp(tasks) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            let len = tasks.length;
+            for (let i = 0; i < len; i++) {
+                tasks[i]['createdAt'] = new Date();
+                if (((_a = tasks[i]) === null || _a === void 0 ? void 0 : _a.subTasks) && ((_b = tasks[i]) === null || _b === void 0 ? void 0 : _b.subTasks.length)) {
+                    yield this.addTimeStamp((_c = tasks[i]) === null || _c === void 0 ? void 0 : _c.subTasks);
+                }
+            }
+        });
     }
     /**
      * Returns single doucument of model specified by _id.
@@ -192,6 +302,15 @@ class BaseController {
      * Deletes a single document selected by id
      */
     deleteById(res, documentId, errMsg = `Failed to delete document ${documentId}`) {
+    }
+    writeTasksToFile() {
+        return __awaiter(this, void 0, void 0, function* () {
+            fs_1.default.writeFile(path_1.default.join(__dirname, '../../tasks.json'), JSON.stringify(this.tasks), (error) => {
+                if (error) {
+                    throw new Error("Error in adding new field");
+                }
+            });
+        });
     }
 }
 exports.BaseController = BaseController;

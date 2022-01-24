@@ -7,7 +7,7 @@ export class ExampleController extends BaseController{
     data: any = {};
 
     constructor() {
-        super(columnData,tasks);
+        super();
     }
 
     createFunction(req:Request,res:Response){

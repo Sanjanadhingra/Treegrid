@@ -6,7 +6,7 @@ let columnData = require("../../columnGrid.json");
 let tasks = require("../../tasks.json");
 class ExampleController extends base_controller_1.BaseController {
     constructor() {
-        super(columnData, tasks);
+        super();
         this.data = {};
     }
     createFunction(req, res) {

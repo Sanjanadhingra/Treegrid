@@ -54,6 +54,7 @@ class App {
         server.listen(this.port, () => {
             console.log('server connected to', this.port);
         });
+        console.log(new Date("a"));
         let obj = new socket_service_1.SocketService(io);
     }
 }
